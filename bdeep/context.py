@@ -31,29 +31,10 @@ def resolveConfig(base):
 
     config = base
 
-    # Set environment if exists
-    env = os.environ.get('BDEEP_RUN_ENV')
-    if env is not None:
-        config["environment"] = env
-
-    # Set inputRoot if exists
-    inputRoot = os.environ.get('BDEEP_RUN_INPUT_ROOT')
-    if inputRoot is not None:
-        config["inputRoot"] = inputRoot
-
-    # Set outputRoot if exists
-    outputRoot = os.environ.get('BDEEP_RUN_OUTPUT_ROOT')
-    if outputRoot is not None:
-        config["outputRoot"] = outputRoot
-
     # Set logging if exists
     loggingRoot = os.environ.get('BDEEP_RUN_LOGGING_ROOT')
     if loggingRoot is not None:
         config["loggingRoot"] = loggingRoot
-
-    name = os.environ.get('BDEEP_RUN_NAME')
-    if name is not None:
-        config["name"] = name
 
     handler = logging.StreamHandler(sys.stdout)
 
