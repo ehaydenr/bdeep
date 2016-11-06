@@ -67,8 +67,11 @@ def verifyRepo(repoPath, remote, branch):
 '''
 Check if the repository has a newer version on remote
 '''
-def repoIsDirty(repoPath):
-    return git.Repo(repoPath).is_dirty()
+def repoIsBehind(repoPath):
+    repo = git.Repo(repoPath)
+    commits_behind = repo.iter_commits('master..origin/master')
+    count = sum(1 for c in commits_behind)
+    return count > 0
 
 def repoExists(repoPath):
     return os.path.exists(os.path.join(repoPath, '.git'))
@@ -127,12 +130,12 @@ for job in jobs:
         rootDir = os.path.join(jobPath, mode['rootDir'])
 
         # See if project needs updating
-        if not repoExists(jobPath) or repoIsDirty(jobPath):
+        if not repoExists(jobPath) or repoIsBehind(jobPath):
             print "Project needs updating"
             if not repoExists(jobPath):
                 print "Repo didn't exist"
                 cloneRepo(jobPath, mode['remote'], mode['branch'])
-            elif not repoIsDirty(jobPath):
+            elif not repoIsBehind(jobPath):
                 print "Repo was dirty"
                 updateRepo(jobPath)
 
