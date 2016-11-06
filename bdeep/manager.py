@@ -69,7 +69,8 @@ Check if the repository has a newer version on remote
 '''
 def repoIsBehind(repoPath):
     repo = git.Repo(repoPath)
-    commits_behind = repo.iter_commits('master..origin/master')
+    repo.remotes.origin.fetch()
+    commits_behind = repo.iter_commits('{0}..origin/{0}'.format(repo.active_branch.name))
     count = sum(1 for c in commits_behind)
     return count > 0
 
@@ -135,7 +136,7 @@ for job in jobs:
             if not repoExists(jobPath):
                 print "Repo didn't exist"
                 cloneRepo(jobPath, mode['remote'], mode['branch'])
-            elif not repoIsBehind(jobPath):
+            elif repoIsBehind(jobPath):
                 print "Repo was dirty"
                 updateRepo(jobPath)
 
