@@ -148,7 +148,7 @@ for job in jobs:
 
         if 'cronTpl' in mode:
             cronFile = os.path.join(rootDir, mode['cronTpl'])
-            rendered = render(cronFile, {'command': command})
+            rendered = render(cronFile, {'command': command, 'user': 'job'})
             path = getCrontabFilePath(job['name'], mode['name'])
             writeFile(path, rendered)
         else:
