@@ -8,4 +8,9 @@ setup(name='bdeep',
       author_email='',
       license='',
       packages=['bdeep'],
+      install_requires=[
+          'docker-py',
+          'gitpython',
+          'jinja2'
+      ],
       zip_safe=False)
