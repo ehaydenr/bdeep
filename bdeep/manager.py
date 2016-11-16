@@ -121,7 +121,7 @@ for job in jobs:
 
         remote = mode['remote']
         branch = mode['branch']
-        tag = 'bdeep-{0}-{1}'.format(job['name'], mode['branch'])
+        tag = 'bdeep-{0}-{1}'.format(job['name'].lower(), mode['branch'].lower())
 
         # If repo exists and is incorrect, just delete contents
         if repoExists(jobPath) and not verifyRepo(jobPath, remote, branch):
